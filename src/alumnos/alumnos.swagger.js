@@ -9,71 +9,111 @@
  * @openapi
  *  components:
  *    schemas:
- *      User:
+ *      Alumno:
  *        type: object
  *        required:
- *          - email
- *          - pass
+ *          - dni
+ *          - nombre
  *        properties:
- *          email:
+ *          dni:
  *            type: string
- *            format: email
- *            description: Email for the user, needs to be unique.
- *          pass:
+ *            description: DNI del alumno.
+ *          nombre:
  *            type: string
- *            description: Password for the user
+ *            description: Nombre del alumno
  *        example:
- *           email: john@mail.com
- *           pass: secret
- *           token: '653532'
- *      AuthToken:
- *        type: object
- *        required:
- *          - accessToken
- *          - refreshToken
- *          - tokenType
- *          - expires
- *        properties:
- *          accessToken:
- *            type: string
- *            description: Authorization bearer token.
- *          refreshToken:
- *            type: string
- *            description: Refresh token.
- *          tokenType:
- *            type: string
- *            description: value is bearer
- *          expires:
- *             type: number
- *             description: number of seconds for token expiration
- *        example:
- *           accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZTdmZmFiOC0wM2RlLWNkZTEtNDVjMy03ZWE5YTJmNjFlNTYiLCJlbWFpbCI6ImpzZWlqYXNAZ21haWwuY29tIiwiaWF0IjoxNTgzMzQ5MDU0LCJleHAiOjE1ODMzNDkxMTR9.ftDxHN-EqBMIqxatjjyYwfD_l2wKBaiJO1lTE9DPTX8
- *           refreshToken: 9ea97d38-873a-b680-a236-16feb6bd4590
- *           tokenType: bearer
- *           expires: 900
+ *           dni: 12345678M
+ *           nombre: Juan Perez
  */
 
 /**
  * @openapi
- *  /auth/user/login:
- *    post:
- *      summary: Create a token for the user
- *      tags: [Auth]
+ *  /alumnos/{dni}:
+ *    get:
+ *      summary: Recupera un alumno por su dni.
+ *      tags: [Alumno]
  *      security: []
- *      operationId: loginUser
+ *      operationId: getAlumno
+ *      parameters:
+ *        - in: path
+ *          name: dni
+ *          required: true
+ *          description: DNI del alumno.
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: Un alumno.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Alumno'
+ *        "404":
+ *          description: Alumno no encontrado.
+ */
+
+/**
+ * @openapi
+ *  /alumnos:
+ *    get:
+ *      summary: Recupera todos los alumnos
+ *      tags: [Alumno]
+ *      security: []
+ *      operationId: getAlumnos
+ *      responses:
+ *        "200":
+ *          description: Listado de alumnos.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Alumno'
+ */
+
+/**
+ * @openapi
+ *  /alumnos:
+ *    post:
+ *      summary: Inserta un alumno.
+ *      tags: [Alumno]
+ *      security: []
+ *      operationId: insertAlumno
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/User'
+ *              $ref: '#/components/schemas/Alumno'
  *      responses:
  *        "200":
- *          description: A user token
+ *          description: Un alumno.
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/AuthToken'
- *        "401":
- *          description: Username or password not correct
+ *                $ref: '#/components/schemas/Alumno'
+ *        "404":
+ *          description: Alumno no encontrado.
+ */
+
+/**
+ * @openapi
+ *  /alumnos/{dni}:
+ *    delete:
+ *      summary: Elimina un alumno.
+ *      tags: [Alumno]
+ *      security: []
+ *      operationId: deleteAlumno
+ *      parameters:
+ *        - in: path
+ *          name: dni
+ *          required: true
+ *          description: DNI del alumno.
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: Alumno eliminado.
+ *        "404":
+ *          description: Alumno no encontrado.
  */
