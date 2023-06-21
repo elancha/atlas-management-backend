@@ -55,7 +55,7 @@
 
 /**
  * @openapi
- *  /auth/user/login:
+ *  /auth/login:
  *    post:
  *      summary: Create a token for the user
  *      tags: [Auth]
