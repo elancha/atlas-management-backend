@@ -43,6 +43,24 @@ async function createAlumno(req, res) {
   return res.status(200).send(newAlumno);
 }
 
+async function updateAlumno(req, res) {
+  if (!req.params.dni) {
+    return res.status(400).send('DNI es necesario.');
+  }
+
+  const alumnosCollection = getCollection('alumnos');
+
+  const alumno = await alumnosCollection.findOne({ dni: req.params.dni });
+  if (alumno) {
+    const alumnoActualizado = req.body;
+    alumnoActualizado.id = alumno.id;
+    await alumnosCollection.update(alumnoActualizado);
+    return res.status(200).send('Alumno actualizado');
+  }
+
+  return res.status(404).send('No existe un alumno con ese DNI.');
+}
+
 async function deleteAlumno(req, res) {
   if (!req.params.dni) {
     return res.status(400).send('DNI es necesario.');
@@ -64,4 +82,5 @@ module.exports = {
   getAlumnos,
   createAlumno,
   deleteAlumno,
+  updateAlumno,
 };

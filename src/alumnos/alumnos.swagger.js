@@ -99,6 +99,34 @@
 /**
  * @openapi
  *  /alumnos/{dni}:
+ *    put:
+ *      summary: Actualiza un alumno.
+ *      tags: [Alumno]
+ *      security: []
+ *      operationId: updateAlumno
+ *      parameters:
+ *        - in: path
+ *          name: dni
+ *          required: true
+ *          description: DNI del alumno.
+ *          schema:
+ *            type: string
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Alumno'
+ *      responses:
+ *        "200":
+ *          description: Alumno eliminado.
+ *        "404":
+ *          description: Alumno no encontrado.
+ */
+
+/**
+ * @openapi
+ *  /alumnos/{dni}:
  *    delete:
  *      summary: Elimina un alumno.
  *      tags: [Alumno]
