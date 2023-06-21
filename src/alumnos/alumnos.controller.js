@@ -70,7 +70,7 @@ async function deleteAlumno(req, res) {
 
   const alumno = await alumnosCollection.findOne({ dni: req.params.dni });
   if (alumno) {
-    await alumnosCollection.removeById(req.body);
+    await alumnosCollection.removeById(alumno.id);
     return res.status(200).send('Alumno eliminado');
   }
 
